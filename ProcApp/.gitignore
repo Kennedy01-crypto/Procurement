@@ -1,0 +1,63 @@
+# Python virtual environment
+venv/ 
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+eggs/
+*.egg-info/
+.installed.cfg
+*.manifest
+*.spec
+
+# Instance-specific configuration
+instance/config.py 
+
+# Database files (if using SQLite directly in the project folder)
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+
+# Editor/IDE-specific files (common examples)
+.vscode/ # VS Code settings and temporary files
+.idea/   # IntelliJ IDEA / PyCharm project files
+*.sublime-project
+*.sublime-workspace
+
+# Operating System files
+.DS_Store # macOS
+Thumbs.db # Windows
+ehthumbs.db # Windows
+Desktop.ini # Windows
+
+# Environment variables for Flask CLI (if not committed)
+.flaskenv # Only if you consider it sensitive or user-specific
+
+# Test reports
+.coverage
+.tox/
+nosetests.xml
+pytest.xml
+
+# Documentation artifacts
+docs/_build/
+
+# Any other sensitive or auto-generated files
+# For example, PDF reports or temporary files in certain directories
+# generated_reports/
+# temp_files/

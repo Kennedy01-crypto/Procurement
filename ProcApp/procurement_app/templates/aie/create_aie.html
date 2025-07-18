@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create New AIE Request</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Create New Authority to Incur Expenditure (AIE) Request</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <ul class="flashes">
+      {% for category, message in messages %}
+      <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+
+    <form
+      method="POST"
+      action="{{ url_for('app.create_aie') }}"
+      enctype="multipart/form-data"
+    >
+      <label for="item_service">Item/Service:</label><br />
+      <input
+        type="text"
+        id="item_service"
+        name="item_service"
+        required
+      /><br /><br />
+
+      <label for="justification">Justification:</label><br />
+      <textarea
+        id="justification"
+        name="justification"
+        rows="5"
+        required
+      ></textarea
+      ><br /><br />
+
+      <label for="procurement_plan_item_id"
+        >Select from Approved Procurement Plan:</label
+      ><br />
+      <select
+        id="procurement_plan_item_id"
+        name="procurement_plan_item_id"
+        required
+      >
+        <option value="">-- Select an item --</option>
+        <option value="1">Laptop Purchase (from Plan)</option>
+        <option value="2">Office Supplies (from Plan)</option></select
+      ><br /><br />
+
+      <label for="document">Upload Supporting Document (Optional):</label><br />
+      <input type="file" id="document" name="document" /><br /><br />
+
+      <input type="submit" value="Submit AIE Request" />
+    </form>
+
+    <p><a href="{{ url_for('index') }}">Go to Home</a></p>
+  </body>
+</html>
