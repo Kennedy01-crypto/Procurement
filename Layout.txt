@@ -1,0 +1,44 @@
+```
+procurement_app/                 <- Your main project directory
+├── venv/                        <- Virtual environment for isolated Python dependencies
+│   ├── bin/                     <- (Linux/macOS/WSL/Git Bash) Contains 'activate' script, python executable, pip
+│   └── Scripts/                 <- (Windows) Contains 'activate.bat', 'Activate.ps1', python.exe, pip.exe
+│   └── Lib/                     <- (Windows) Python standard library and site-packages
+│   └── Include/                 <- (Windows) Header files
+│   └── pyvenv.cfg               <- Virtual environment configuration file
+├── instance/                    <- Instance-specific configuration and sensitive files (not committed to Git)
+│   └── config.py                <- Database URI, secret key, environment variables for deployment
+├── static/                      <- Publicly accessible static assets (CSS, JS, images)
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── main.js
+│   └── images/
+│       └── logo.png
+├── templates/                   <- HTML template files for rendering web pages
+│   ├── base.html                <- Base layout template for inheritance
+│   ├── auth/                    <- Templates for authentication (login, register)
+│   │   ├── login.html
+│   │   └── register.html
+│   ├── aie/                     <- Templates for Authority to Incur Expenditure (AIE) phase
+│   │   ├── create_aie.html
+│   │   ├── aie_list.html
+│   │   └── aie_detail.html
+│   ├── rlpo/                    <- Templates for Requisition for Local Purchase Order (RLPO) phase
+│   │   ├── create_rlpo.html
+│   │   └── rlpo_list.html
+│   └── dashboard.html           <- Main user dashboard after login
+├── procurement_app/             <- Your main Flask application Python package
+│   ├── __init__.py              <- Initializes the Flask app, registers blueprints, sets up extensions
+[cite_start]│   ├── models.py                <- Defines SQLAlchemy database models (e.g., AIE, RLPO, Tender) [cite: 50]
+│   ├── forms.py                 <- Defines Flask-WTF form classes for data validation and rendering
+│   ├── auth.py                  <- Blueprint for user authentication routes and logic
+[cite_start]│   ├── views.py                 <- Blueprints for application routes for form submission, viewing, approval, or action [cite: 51]
+│   ├── config.py                <- Default configuration settings for the Flask app (e.g., development settings)
+│   └── extensions.py            <- Initializes Flask extensions like SQLAlchemy, Flask-Login
+├── .flaskenv                    <- Environment variables for Flask CLI (optional)
+├── .gitignore                   <- Specifies files and directories to be ignored by Git
+├── app.py                       <- Main script to run the Flask application
+├── requirements.txt             <- Lists all Python package dependencies for the project
+└── README.md                    <- Project description, setup instructions, and usage guide
+```
