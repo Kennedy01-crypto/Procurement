@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nairobi Procurement - {% block title %}{% endblock %}</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/lucide@latest/dist/lucide.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    {% block head %}{% endblock %}
+  </head>
+  <body class="bg-gray-50">
+    <!-- Top Navigation -->
+    <nav class="bg-green-700 text-white shadow-md">
+      <div
+        class="container mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <a href="{{ url_for('index') }}" class="flex items-center space-x-2">
+          <i data-lucide="building-2" class="w-6 h-6"></i>
+          <span class="font-semibold text-lg">Nairobi Procurement</span>
+        </a>
+
+        <div class="hidden md:flex items-center space-x-6">
+          <a href="{{ url_for('index') }}" class="hover:text-yellow-300"
+            >Home</a
+          >
+          {#
+          <a href="{{ url_for('main.about') }}" class="hover:text-yellow-300"
+            >About</a
+          >
+          <a href="{{ url_for('auth.account') }}" class="hover:text-yellow-300"
+            >Account</a
+          >
+          {% if current_user.is_authenticated %}
+          <a href="{{ url_for('auth.logout') }}" class="hover:text-yellow-300"
+            >Logout</a
+          >
+          {% endif %} #}
+        </div>
+
+        <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden md:hidden bg-green-800 px-4 py-2">
+        {#
+        <a
+          href="{{ url_for('index') }}"
+          class="block py-2 hover:text-yellow-300"
+          >Home</a
+        >
+        <a
+          href="{{ url_for('main.about') }}"
+          class="block py-2 hover:text-yellow-300"
+          >About</a
+        >
+
+        <a
+          href="{{ url_for('auth.account') }}"
+          class="block py-2 hover:text-yellow-300"
+          >Account</a
+        >
+        {% if current_user.is_authenticated %}
+        <a
+          href="{{ url_for('auth.logout') }}"
+          class="block py-2 hover:text-yellow-300"
+          >Logout</a
+        >
+        {% endif %} #}
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6 min-h-screen">
+      <!-- Flash Messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <div class="flash-messages space-y-2 mb-6">
+        {% for category, message in messages %}
+        <div
+          class="flash-{{ category }} p-4 rounded-md border 
+                            {% if category == 'success' %}bg-green-100 border-green-400 text-green-800
+                            {% elif category == 'error' %}bg-red-100 border-red-400 text-red-800
+                            {% else %}bg-blue-100 border-blue-400 text-blue-800{% endif %}"
+        >
+          {{ message }}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %} {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-4 md:mb-0">
+            <p>&copy; {{ now.year }} Nairobi City County Government</p>
+          </div>
+          <div class="flex space-x-4">
+            <a href="#" class="hover:text-yellow-300">Terms</a>
+            <a href="#" class="hover:text-yellow-300">Privacy</a>
+            <a href="#" class="hover:text-yellow-300">Contact</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

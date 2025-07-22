@@ -1,0 +1,165 @@
+{% extends "base.html" %} {% block title %}Home - Nairobi Procurement{% endblock
+%} {% block content %}
+<div class="bg-green-50 py-12">
+  <div class="container mx-auto px-4">
+    <div class="text-center">
+      <h1 class="text-4xl font-bold text-green-800 mb-4">
+        Nairobi City County Procurement System
+      </h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Streamlining government procurement processes for efficiency,
+        transparency, and accountability
+      </p>
+
+      {% if not current_user.is_authenticated %}
+      <div class="mt-8 flex justify-center space-x-4">
+        <a href="{{ url_for('auth.login') }}" class="btn-primary">
+          <i data-lucide="log-in" class="mr-2"></i> Login
+        </a>
+        <a href="{{ url_for('auth.register') }}" class="btn-secondary">
+          <i data-lucide="user-plus" class="mr-2"></i> Register
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="container mx-auto px-4 py-12">
+  <div class="mb-12">
+    <h2 class="text-2xl font-bold text-green-800 mb-6 text-center">
+      Procurement Process Flow
+    </h2>
+
+    <div class="relative">
+      <!-- Process Timeline -->
+      <div class="hidden md:flex justify-between items-start mb-8">
+        {% for step in [ {"icon": "file-edit", "title": "AIE Creation", "desc":
+        "Create expenditure request"}, {"icon": "check-circle", "title":
+        "Approval", "desc": "Chief Officer review"}, {"icon": "send", "title":
+        "Forwarding", "desc": "To Departmental Accountant"}, {"icon":
+        "file-search", "title": "RLPO Prep", "desc": "Verify budget & specs"},
+        {"icon": "award", "title": "Tendering", "desc": "RFQ/RFP process"},
+        {"icon": "gavel", "title": "Award", "desc": "Evaluation & contract"} ]
+        %}
+        <div class="flex flex-col items-center text-center w-40">
+          <div
+            class="bg-white p-3 rounded-full shadow-md border-2 border-green-500 mb-2"
+          >
+            <i data-lucide="{{ step.icon }}" class="w-6 h-6 text-green-600"></i>
+          </div>
+          <h3 class="font-semibold text-green-800">{{ step.title }}</h3>
+          <p class="text-sm text-gray-600">{{ step.desc }}</p>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Mobile Process Steps -->
+      <div class="md:hidden space-y-6">
+        {% for step in [ {"icon": "file-edit", "title": "1. AIE Creation",
+        "desc": "Authorized Departmental Agent creates expenditure request with
+        justification and supporting documents"}, {"icon": "check-circle",
+        "title": "2. Chief Approval", "desc": "Chief Officer reviews and
+        approves/rejects with comments"}, {"icon": "send", "title": "3. Forward
+        to Accountant", "desc": "Approved AIE automatically forwarded for budget
+        verification"}, {"icon": "file-search", "title": "4. RLPO Preparation",
+        "desc": "Departmental Accountant verifies budget and prepares
+        procurement documents"}, {"icon": "award", "title": "5. Tendering
+        Process", "desc": "Supply Chain Management initiates RFQ or RFP
+        process"}, {"icon": "gavel", "title": "6. Evaluation & Award", "desc":
+        "Committee evaluates bids and awards to successful supplier"} ] %}
+        <div
+          class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-green-500"
+        >
+          <div class="flex items-center mb-2">
+            <div class="bg-green-100 p-2 rounded-full mr-3">
+              <i
+                data-lucide="{{ step.icon }}"
+                class="w-5 h-5 text-green-600"
+              ></i>
+            </div>
+            <h3 class="font-semibold text-green-800">{{ step.title }}</h3>
+          </div>
+          <p class="text-sm text-gray-600 pl-11">{{ step.desc }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-8">
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <div class="flex items-center mb-4">
+        <div class="bg-green-100 p-2 rounded-full mr-3">
+          <i data-lucide="shield-check" class="w-5 h-5 text-green-600"></i>
+        </div>
+        <h3 class="text-lg font-semibold">Transparent Process</h3>
+      </div>
+      <p class="text-gray-600">
+        Every procurement action is recorded and traceable, ensuring
+        accountability at all stages of the process.
+      </p>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <div class="flex items-center mb-4">
+        <div class="bg-green-100 p-2 rounded-full mr-3">
+          <i data-lucide="clock" class="w-5 h-5 text-green-600"></i>
+        </div>
+        <h3 class="text-lg font-semibold">Efficient Workflow</h3>
+      </div>
+      <p class="text-gray-600">
+        Automated routing and notifications reduce processing time from AIE
+        creation to payment.
+      </p>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <div class="flex items-center mb-4">
+        <div class="bg-green-100 p-2 rounded-full mr-3">
+          <i data-lucide="file-text" class="w-5 h-5 text-green-600"></i>
+        </div>
+        <h3 class="text-lg font-semibold">Document Management</h3>
+      </div>
+      <p class="text-gray-600">
+        All supporting documents are securely stored and linked to each
+        procurement record.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Stats Section -->
+<div class="bg-gray-100 py-12">
+  <div class="container mx-auto px-4">
+    <h2 class="text-2xl font-bold text-green-800 mb-8 text-center">
+      System Statistics
+    </h2>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+        <p class="text-3xl font-bold text-green-600">{{ stats.total_aies }}</p>
+        <p class="text-gray-600">AIEs Processed</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+        <p class="text-3xl font-bold text-yellow-600">
+          {{ stats.active_tenders }}
+        </p>
+        <p class="text-gray-600">Active Tenders</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+        <p class="text-3xl font-bold text-blue-600">
+          {{ stats.registered_suppliers }}
+        </p>
+        <p class="text-gray-600">Registered Suppliers</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+        <p class="text-3xl font-bold text-purple-600">
+          {{ stats.completed_procurements }}
+        </p>
+        <p class="text-gray-600">Completed Procurements</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

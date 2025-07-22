@@ -1,0 +1,152 @@
+{% extends "base.html" %} {% block title %}About the System{% endblock %} {%
+block content %}
+<div class="bg-green-50 py-12">
+  <div class="container mx-auto px-4">
+    <div class="text-center">
+      <h1 class="text-3xl font-bold text-green-800 mb-4">
+        About Nairobi Procurement System
+      </h1>
+      <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+        A digital solution designed to streamline government procurement
+        processes in Nairobi City County
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="container mx-auto px-4 py-12">
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-white p-8 rounded-lg shadow-md mb-8">
+      <h2 class="text-2xl font-bold text-green-800 mb-4">System Overview</h2>
+      <p class="text-gray-700 mb-4">
+        The Nairobi City County Procurement System is a comprehensive platform
+        that manages the entire procurement lifecycle from Authority to Incur
+        Expenditure (AIE) creation through to payment processing. The system
+        ensures compliance with the Public Procurement and Asset Disposal Act
+        while improving efficiency and transparency in county procurement
+        operations.
+      </p>
+      <p class="text-gray-700">
+        Designed for use by county staff and registered suppliers, the system
+        provides role-based access to procurement functions with automated
+        workflows that reduce processing times and improve accountability.
+      </p>
+    </div>
+
+    <div class="bg-white p-8 rounded-lg shadow-md mb-8">
+      <h2 class="text-2xl font-bold text-green-800 mb-4">Key Features</h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        {% for feature in [ {"icon": "shield", "title": "Compliance", "desc":
+        "Ensures all procurements follow PPADA regulations and county
+        procurement plans"}, {"icon": "zap", "title": "Efficiency", "desc":
+        "Reduces paperwork and processing time through automated workflows"},
+        {"icon": "eye", "title": "Transparency", "desc": "Provides audit trails
+        and real-time tracking of procurement status"}, {"icon": "users",
+        "title": "Collaboration", "desc": "Enables seamless interaction between
+        departments and suppliers"}, {"icon": "file-text", "title": "Document
+        Management", "desc": "Central repository for all procurement-related
+        documents"}, {"icon": "bar-chart-2", "title": "Reporting", "desc":
+        "Comprehensive reports for management and regulatory compliance"} ] %}
+        <div class="flex">
+          <div
+            class="bg-green-100 p-3 rounded-full h-12 w-12 flex-shrink-0 mr-4"
+          >
+            <i
+              data-lucide="{{ feature.icon }}"
+              class="w-6 h-6 text-green-600"
+            ></i>
+          </div>
+          <div>
+            <h3 class="font-semibold text-lg text-green-800 mb-1">
+              {{ feature.title }}
+            </h3>
+            <p class="text-gray-600">{{ feature.desc }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="bg-white p-8 rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold text-green-800 mb-4">
+        Procurement Process
+      </h2>
+
+      <div class="mb-6">
+        <h3 class="text-xl font-semibold text-green-700 mb-3">
+          Standard Workflow
+        </h3>
+        <ol class="list-decimal pl-5 space-y-3 text-gray-700">
+          <li>
+            <strong>AIE Creation:</strong> Departmental agent initiates
+            procurement request with justification
+          </li>
+          <li>
+            <strong>Approval:</strong> Chief Officer reviews and approves
+            expenditure authority
+          </li>
+          <li>
+            <strong>RLPO Preparation:</strong> Accountant verifies budget and
+            prepares procurement documents
+          </li>
+          <li>
+            <strong>Tendering:</strong> SCM initiates appropriate procurement
+            method (RFQ/RFP)
+          </li>
+          <li>
+            <strong>Evaluation:</strong> Committee evaluates bids and recommends
+            award
+          </li>
+          <li>
+            <strong>Contract/LPO:</strong> Issuance of formal procurement
+            document to supplier
+          </li>
+          <li>
+            <strong>Delivery & Payment:</strong> Goods/services delivered,
+            inspected, and payment processed
+          </li>
+        </ol>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-semibold text-green-700 mb-3">User Roles</h3>
+        <div class="grid md:grid-cols-2 gap-4">
+          {% for role in [ {"title": "ADA", "desc": "Authorized Departmental
+          Agent - Creates AIEs and initiates procurement"}, {"title": "Chief
+          Officer", "desc": "Approves/rejects AIEs and provides oversight"},
+          {"title": "Departmental Accountant", "desc": "Prepares RLPOs and
+          verifies budget availability"}, {"title": "SCM Officer", "desc":
+          "Manages tendering process and supplier engagement"}, {"title":
+          "Evaluation Committee", "desc": "Evaluates bids and recommends
+          awards"}, {"title": "Supplier", "desc": "Responds to tenders and
+          delivers goods/services"} ] %}
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h4 class="font-medium text-green-800">{{ role.title }}</h4>
+            <p class="text-sm text-gray-600">{{ role.desc }}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bg-gray-100 py-12">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-2xl font-bold text-green-800 mb-6">
+      Need Help With the System?
+    </h2>
+    <p class="text-gray-600 max-w-2xl mx-auto mb-6">
+      Our support team is available to assist with any questions or issues you
+      may encounter while using the procurement system.
+    </p>
+    <a
+      href="{{ url_for('main.contact') }}"
+      class="btn-primary inline-flex items-center"
+    >
+      <i data-lucide="help-circle" class="mr-2"></i> Contact Support
+    </a>
+  </div>
+</div>
+{% endblock %}

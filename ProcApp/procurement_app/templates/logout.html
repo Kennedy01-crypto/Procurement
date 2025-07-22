@@ -1,0 +1,42 @@
+{% extends "base.html" %} {% block title %}Logged Out{% endblock %} {% block
+content %}
+<div
+  class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8"
+>
+  <div class="max-w-md w-full space-y-8 text-center">
+    <div>
+      <div class="flex justify-center">
+        <i data-lucide="log-out" class="w-16 h-16 text-green-600"></i>
+      </div>
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        You have been logged out
+      </h2>
+      <p class="mt-2 text-center text-sm text-gray-600">
+        Thank you for using the Nairobi City County Procurement System
+      </p>
+    </div>
+
+    <div class="mt-8 space-y-4">
+      <a href="{{ url_for('auth.login') }}" class="btn-primary w-full">
+        <i data-lucide="log-in" class="mr-2"></i> Sign in again
+      </a>
+
+      <a href="{{ url_for('main.index') }}" class="btn-secondary w-full">
+        <i data-lucide="home" class="mr-2"></i> Return to homepage
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    lucide.createIcons();
+
+    // Clear any remaining session data
+    setTimeout(function () {
+      localStorage.removeItem("procurementSystemState");
+      sessionStorage.clear();
+    }, 1000);
+  });
+</script>
+{% endblock %}
