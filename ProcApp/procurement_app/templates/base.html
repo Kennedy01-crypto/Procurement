@@ -28,27 +28,44 @@
       <div
         class="container mx-auto px-4 py-3 flex justify-between items-center"
       >
-        <a href="{{ url_for('index') }}" class="flex items-center space-x-2">
+        <a
+          href="{{ url_for('main.index') }}"
+          class="flex items-center space-x-2"
+        >
           <i data-lucide="building-2" class="w-6 h-6"></i>
           <span class="font-semibold text-lg">Nairobi Procurement</span>
         </a>
 
         <div class="hidden md:flex items-center space-x-6">
-          <a href="{{ url_for('index') }}" class="hover:text-yellow-300"
+          <a href="{{ url_for('main.index') }}" class="hover:text-yellow-300"
             >Home</a
           >
-          {#
+
           <a href="{{ url_for('main.about') }}" class="hover:text-yellow-300"
             >About</a
           >
-          <a href="{{ url_for('auth.account') }}" class="hover:text-yellow-300"
+          {% if current_user.is_authenticated %}
+          <a
+            href="{{ url_for('main.dashboard') }}"
+            class="hover:text-yellow-300"
+            >Dashboard</a
+          >
+          <a href="{{ url_for('main.account') }}" class="hover:text-yellow-300"
             >Account</a
           >
-          {% if current_user.is_authenticated %}
           <a href="{{ url_for('auth.logout') }}" class="hover:text-yellow-300"
             >Logout</a
           >
-          {% endif %} #}
+          {% else %}
+          <a href="{{ url_for('auth.login') }}" class="hover:text-yellow-300"
+            >Login</a
+          >
+          <a
+            href="{{ url_for('auth.register') }}"
+            class="bg-yellow-400 text-green-900 px-3 py-1 rounded-md hover:bg-yellow-300"
+            >Register</a
+          >
+          {% endif %}
         </div>
 
         <button id="mobile-menu-button" class="md:hidden focus:outline-none">
@@ -58,9 +75,8 @@
 
       <!-- Mobile Menu -->
       <div id="mobile-menu" class="hidden md:hidden bg-green-800 px-4 py-2">
-        {#
         <a
-          href="{{ url_for('index') }}"
+          href="{{ url_for('main.index') }}"
           class="block py-2 hover:text-yellow-300"
           >Home</a
         >
@@ -70,18 +86,34 @@
           >About</a
         >
 
+        {% if current_user.is_authenticated %}
         <a
-          href="{{ url_for('auth.account') }}"
+          href="{{ url_for('main.dashboard') }}"
+          class="block py-2 hover:text-yellow-300"
+          >Dashboard</a
+        >
+        <a
+          href="{{ url_for('main.account') }}"
           class="block py-2 hover:text-yellow-300"
           >Account</a
         >
-        {% if current_user.is_authenticated %}
         <a
           href="{{ url_for('auth.logout') }}"
           class="block py-2 hover:text-yellow-300"
           >Logout</a
         >
-        {% endif %} #}
+        {%else %}
+        <a
+          href="{{ url_for('auth.login') }}"
+          class="block py-2 hover:text-yellow-300"
+          >Login</a
+        >
+        <a
+          href="{{ url_for('auth.register') }}"
+          class="block py-2 hover:bg-yellow-300"
+          >Register</a
+        >
+        {% endif %}
       </div>
     </nav>
 

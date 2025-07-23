@@ -1,67 +1,239 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create New AIE Request</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}"
-    />
-  </head>
-  <body>
-    <h1>Create New Authority to Incur Expenditure (AIE) Request</h1>
+{% extends "base.html" %} {% block title %}Create AIE{% endblock %} {% block
+content %}
+<div class="max-w-4xl mx-auto">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-green-800">
+      Create Authority to Incur Expenditure (AIE)
+    </h1>
+    <a href="{{ url_for('aie.aie_list') }}" class="btn-secondary">
+      <i data-lucide="arrow-left" class="mr-2"></i> Back to List
+    </a>
+  </div>
 
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if
-    messages %}
-    <ul class="flashes">
-      {% for category, message in messages %}
-      <li class="{{ category }}">{{ message }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %} {% endwith %}
-
+  <div class="bg-white p-6 rounded-lg shadow-md">
     <form
       method="POST"
-      action="{{ url_for('app.create_aie') }}"
+      action="{{ url_for('aie.create_aie') }}"
       enctype="multipart/form-data"
     >
-      <label for="item_service">Item/Service:</label><br />
-      <input
-        type="text"
-        id="item_service"
-        name="item_service"
-        required
-      /><br /><br />
+      {{ form.hidden_tag() }}
 
-      <label for="justification">Justification:</label><br />
-      <textarea
-        id="justification"
-        name="justification"
-        rows="5"
-        required
-      ></textarea
-      ><br /><br />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <!-- Basic Information -->
+        <div class="space-y-4">
+          <h2 class="text-lg font-semibold border-b pb-2">Basic Information</h2>
 
-      <label for="procurement_plan_item_id"
-        >Select from Approved Procurement Plan:</label
-      ><br />
-      <select
-        id="procurement_plan_item_id"
-        name="procurement_plan_item_id"
-        required
-      >
-        <option value="">-- Select an item --</option>
-        <option value="1">Laptop Purchase (from Plan)</option>
-        <option value="2">Office Supplies (from Plan)</option></select
-      ><br /><br />
+          <div>
+            {{ form.procurement_plan_id.label(class="block text-sm font-medium
+            text-gray-700") }} {{ form.procurement_plan_id(class="mt-1 block
+            w-full rounded-md border-gray-300 shadow-sm focus:border-green-500
+            focus:ring-green-500") }} {% for error in
+            form.procurement_plan_id.errors %}
+            <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+            {% endfor %}
+          </div>
 
-      <label for="document">Upload Supporting Document (Optional):</label><br />
-      <input type="file" id="document" name="document" /><br /><br />
+          <div>
+            {{ form.department.label(class="block text-sm font-medium
+            text-gray-700") }} {{ form.department(class="mt-1 block w-full
+            rounded-md border-gray-300 shadow-sm focus:border-green-500
+            focus:ring-green-500") }}
+          </div>
 
-      <input type="submit" value="Submit AIE Request" />
+          <div>
+            {{ form.amount.label(class="block text-sm font-medium
+            text-gray-700") }}
+            <div class="mt-1 relative rounded-md shadow-sm">
+              <div
+                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+              >
+                <span class="text-gray-500 sm:text-sm">KES</span>
+              </div>
+              {{ form.amount(class="block w-full pl-12 pr-12 sm:text-sm
+              border-gray-300 rounded-md focus:ring-green-500
+              focus:border-green-500") }}
+            </div>
+            {% for error in form.amount.errors %}
+            <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Justification -->
+        <div class="space-y-4">
+          <h2 class="text-lg font-semibold border-b pb-2">Justification</h2>
+
+          <div>
+            {{ form.justification.label(class="block text-sm font-medium
+            text-gray-700") }} {{ form.justification(class="mt-1 block w-full
+            rounded-md border-gray-300 shadow-sm focus:border-green-500
+            focus:ring-green-500 h-32") }} {% for error in
+            form.justification.errors %}
+            <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+            {% endfor %}
+          </div>
+
+          <div>
+            {{ form.supporting_docs.label(class="block text-sm font-medium
+            text-gray-700") }} {{ form.supporting_docs(class="mt-1 block w-full
+            text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md
+            file:border-0 file:text-sm file:font-semibold file:bg-green-50
+            file:text-green-700 hover:file:bg-green-100") }}
+            <p class="mt-1 text-sm text-gray-500">
+              Upload supporting documents (PDF, Word, Excel)
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Line Items -->
+      <div class="mb-8">
+        <h2 class="text-lg font-semibold border-b pb-2 mb-4">Items</h2>
+        <div id="line-items">
+          <div
+            class="line-item grid grid-cols-1 md:grid-cols-8 gap-4 mb-4 items-end"
+          >
+            <div class="md:col-span-3">
+              {{ form.line_items[0].description.label(class="block text-sm
+              font-medium text-gray-700") }} {{
+              form.line_items[0].description(class="mt-1 block w-full rounded-md
+              border-gray-300 shadow-sm focus:border-green-500
+              focus:ring-green-500") }}
+            </div>
+            <div>
+              {{ form.line_items[0].quantity.label(class="block text-sm
+              font-medium text-gray-700") }} {{
+              form.line_items[0].quantity(class="mt-1 block w-full rounded-md
+              border-gray-300 shadow-sm focus:border-green-500
+              focus:ring-green-500") }}
+            </div>
+            <div>
+              {{ form.line_items[0].unit_price.label(class="block text-sm
+              font-medium text-gray-700") }} {{
+              form.line_items[0].unit_price(class="mt-1 block w-full rounded-md
+              border-gray-300 shadow-sm focus:border-green-500
+              focus:ring-green-500") }}
+            </div>
+            <div>
+              {{ form.line_items[0].total_price.label(class="block text-sm
+              font-medium text-gray-700") }}
+              <div
+                class="mt-1 block w-full px-3 py-2 bg-gray-50 rounded-md border border-gray-300"
+              >
+                <span id="total-price-0">0.00</span>
+              </div>
+            </div>
+            <div class="flex items-center">
+              <button
+                type="button"
+                class="remove-item text-red-600 hover:text-red-800"
+              >
+                <i data-lucide="trash-2" class="w-5 h-5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          id="add-item"
+          class="mt-2 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-green-700 bg-green-100 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+        >
+          <i data-lucide="plus" class="mr-2 w-4 h-4"></i> Add Item
+        </button>
+      </div>
+
+      <div class="flex justify-end space-x-4">
+        <button type="reset" class="btn-secondary">
+          <i data-lucide="x" class="mr-2"></i> Cancel
+        </button>
+        <button type="submit" class="btn-primary">
+          <i data-lucide="save" class="mr-2"></i> Submit AIE
+        </button>
+      </div>
     </form>
+  </div>
+</div>
 
-    <p><a href="{{ url_for('index') }}">Go to Home</a></p>
-  </body>
-</html>
+<script>
+  // JavaScript for dynamic line items will be added here
+  document.addEventListener("DOMContentLoaded", function () {
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Add item functionality
+    document.getElementById("add-item").addEventListener("click", function () {
+      // Clone the first line item
+      const itemContainer = document.getElementById("line-items");
+      const newItem = itemContainer.firstElementChild.cloneNode(true);
+
+      // Clear values in the new item
+      const inputs = newItem.querySelectorAll("input");
+      inputs.forEach((input) => {
+        input.value = "";
+        // Update the name attributes to maintain unique IDs for form submission
+        const name = input.getAttribute("name");
+        if (name) {
+          const newName = name.replace(
+            "[0]",
+            `[${itemContainer.children.length}]`
+          );
+          input.setAttribute("name", newName);
+          input.setAttribute("id", newName);
+        }
+      });
+
+      // Update the total price display ID
+      const totalDisplay = newItem.querySelector('[id^="total-price"]');
+      if (totalDisplay) {
+        totalDisplay.id = `total-price-${itemContainer.children.length}`;
+        totalDisplay.textContent = "0.00";
+      }
+
+      // Add the new item to the container
+      itemContainer.appendChild(newItem);
+
+      // Reinitialize Lucide icons for the new item
+      lucide.createIcons();
+    });
+
+    // Remove item functionality (delegated event)
+    document
+      .getElementById("line-items")
+      .addEventListener("click", function (e) {
+        if (e.target.closest(".remove-item")) {
+          if (this.children.length > 1) {
+            e.target.closest(".line-item").remove();
+          }
+        }
+      });
+
+    // Calculate totals when quantity or unit price changes (delegated event)
+    document
+      .getElementById("line-items")
+      .addEventListener("input", function (e) {
+        const target = e.target;
+        if (target.matches('[name$="[quantity]"], [name$="[unit_price]"]')) {
+          const itemElement = target.closest(".line-item");
+          const quantity =
+            parseFloat(
+              itemElement.querySelector('[name$="[quantity]"]').value
+            ) || 0;
+          const unitPrice =
+            parseFloat(
+              itemElement.querySelector('[name$="[unit_price]"]').value
+            ) || 0;
+          const total = quantity * unitPrice;
+
+          const index = Array.from(itemElement.parentNode.children).indexOf(
+            itemElement
+          );
+          const totalDisplay = document.getElementById(`total-price-${index}`);
+          if (totalDisplay) {
+            totalDisplay.textContent = total.toFixed(2);
+          }
+        }
+      });
+  });
+</script>
+{% endblock %}
