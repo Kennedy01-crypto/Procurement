@@ -9,7 +9,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(256))
-    role = db.Column(db.String(80), nullable=False, default='ADA') # e.g., 'ADA', 'Chief Officer', etc.
+    role = db.Column(db.Enum('ADA', 'Dept Accountant', 'SCM', 'Chief Officer', name='userrole'), nullable=False, default='ADA')
     name = db.Column(db.String(100)) # To satisfy {{ current_user.name }} in dashboard
     aies = db.relationship('AIE', backref='author', lazy=True)
 
