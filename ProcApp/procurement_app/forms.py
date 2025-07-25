@@ -1,6 +1,6 @@
 # procurement_app/forms.py
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, DecimalField, IntegerField, FileField, FieldList, FormField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, DecimalField, IntegerField, FileField, FieldList, FormField, SelectField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, NumberRange
 from .models import User, Department
 from wtforms_sqlalchemy.fields import QuerySelectField
@@ -12,6 +12,12 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    role = SelectField('Role', choices=[
+        ('ADA', 'ADA'),
+        ('Dept Accountant', 'Dept Accountant'),
+        ('SCM', 'SCM'),
+        ('Chief Officer', 'Chief Officer')
+    ], validators=[DataRequired()])
     submit = SubmitField('Register')
 
     def validate_username(self, username):
